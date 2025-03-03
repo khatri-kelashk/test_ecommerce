@@ -8,8 +8,8 @@ export async function connectToDb() {
     return { client: cachedClient, db: cachedDb };
   }
 
-  const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.vqdwh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-
+//   const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.vqdwh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+  const uri = ""+process.env.MONGO_URI;
   const client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
@@ -21,7 +21,7 @@ export async function connectToDb() {
   await client.connect();
 
   cachedClient = client;
-  cachedDb = client.db('ecommerce-nextjs');
+  cachedDb = client.db(process.env.MONGO_DB_NAME);
 
-  return { client, db: client.db('ecommerce-nextjs') }
+  return { client, db: client.db(process.env.MONGO_DB_NAME) }
 }
